@@ -34,10 +34,14 @@ void Solver::solve_system() {
     solve_linear_system<BicgstabSolver<VectorXd>>(A, rhs, En, E);
 
     double time2 = omp_get_wtime();
+    std::cout << "Ax-b error = " << (A * En - rhs).norm() << "\n";
+    time2 = omp_get_wtime();
     // standart eigen solver
     solve_linear_system<bicgstab>(A, rhs, En, E);
 
     double time3 = omp_get_wtime();
+    std::cout << "Ax-b error = " << (A * En - rhs).norm() << "\n";
+    time3 = omp_get_wtime();
 
     auto matrix_op = [&](const VectorXd &v) {
         return (v - mv_product(Mmat, v)).eval();
@@ -47,7 +51,8 @@ void Solver::solve_system() {
         matrix_op, rhs, En, E);
     double time4 = omp_get_wtime();
 
-    std::cout<< "Ax-b error = "<< (A*En - rhs).norm() << "\n";
+    std::cout << "Ax-b error = " << (A * En - rhs).norm() << "\n";
+
     std::cout<< "Mysolver time = "<< (time2-time1) << "\n";
     std::cout << "Eigsolver time = " << (time3 - time2) << "\n";
     std::cout << "Mysolver2 time = " << (time4 - time3) << "\n";

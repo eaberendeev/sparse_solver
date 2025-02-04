@@ -163,8 +163,8 @@ bool bicgstab_iteration(MatrixOp &&Spmv, const VectorType &rhs, VectorType &x,
         }
         ++i;
     }
-    std::cout << "Time: " << omp_get_wtime() - timeall << std::endl;
-    std::cout << "Time1: " << time1 << std::endl;
+    std::cout << "All bicgstab iteration time: " << omp_get_wtime() - timeall << std::endl;
+    std::cout << "SpMv time in bicg iteration: " << time1 << std::endl;
     tol_error = sqrt(r.squaredNorm() / rhs_sqnorm);
     iters = i;
     return true;
